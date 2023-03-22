@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.superSpinner {
+  font-size: 56px;
+  transform: rotate(-15deg);
+  animation: spinner 1s;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(-999999999deg);
+    font-size: 0px;
+  }
+
+  50% {
+    font-size: 111px;
+  }
+
+  100% {
+    transform: rotate(25deg);
+    font-size: 56px;
+  }
+}
