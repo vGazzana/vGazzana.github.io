@@ -1,18 +1,44 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import BatmanSound from "./assets/effeitoOpeningBatman.mp3";
 
 function App() {
+  const [start, setStart] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const startSite = () => {
+    audioRef.current?.play();
+    setStart((prev) => !prev);
+  };
+
   return (
     <main className="flex h-svh w-svw flex-1 items-center justify-center bg-zinc-50 dark:bg-zinc-900">
-      <section>
-        <div className="superSpinner">
-          <h1 className="font-serif font-extrabold dark:text-white">
-            Vinicius Gazzana
-          </h1>
-          <h2 className="font-mono font-semibold dark:text-white">
-            Front-End Developer
-          </h2>
+      {start && (
+        <section>
+          <div className="superSpinner">
+            <h1 className="font-serif font-extrabold dark:text-white">
+              Vinicius Gazzana
+            </h1>
+            <h2 className="font-mono font-semibold dark:text-white">
+              Front-End Developer
+            </h2>
+          </div>
+        </section>
+      )}
+      {!start && (
+        <div className="flex flex-col items-center justify-center">
+          <button
+            onClick={startSite}
+            className="h-24 w-24 animate-bounce rounded-full bg-zinc-800 p-2 text-white dark:bg-zinc-50 dark:text-black"
+          >
+            ENTER
+          </button>
+          <div className="bounce-shadow w-12 rounded-lg py-2 px-4  "></div>
         </div>
-      </section>
+      )}
+      <audio controls ref={audioRef} className="hidden">
+        <source src={BatmanSound} type="audio/ogg" />
+        SOUND_VINHETA_BATMAN.MP3
+      </audio>
     </main>
   );
 }
