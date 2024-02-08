@@ -11,8 +11,8 @@ function App() {
   };
 
   return (
-    <main className="flex h-svh w-svw flex-1 items-center justify-center bg-zinc-50 dark:bg-zinc-900">
-      {start && (
+    <main className="page-container">
+      {start ? (
         <section>
           <div className="superSpinner">
             <h1 className="font-serif font-extrabold dark:text-white">
@@ -23,8 +23,7 @@ function App() {
             </h2>
           </div>
         </section>
-      )}
-      {!start && (
+      ) : (
         <div className="flex flex-col items-center justify-center">
           <button
             onClick={startSite}

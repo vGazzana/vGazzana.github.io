@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .page-container {
+    @apply flex h-svh w-svw flex-1 items-center justify-center overflow-hidden bg-zinc-50 dark:bg-zinc-900;
+  }
+}
+
 .bounce-shadow {
   background: rgb(0, 0, 0);
   background: linear-gradient(
