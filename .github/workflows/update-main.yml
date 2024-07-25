@@ -26,6 +26,12 @@ jobs:
           node-version: 20.14.0
           cache: "yarn"
 
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Checkout react branch
         run: git checkout react
 
@@ -43,6 +49,12 @@ jobs:
 
       - name: Copy dist files to main branch
         run: cp -r temp/* .
+
+      - name: Remove temp directory and unwanted files
+        run: |
+          rm -rf temp
+          rm -rf node_modules
+          rm -rf dist
 
       - name: Add changes
         run: git add .
