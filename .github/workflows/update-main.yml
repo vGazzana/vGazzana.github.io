@@ -13,11 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Nodejs
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.14.0
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -34,17 +34,26 @@ jobs:
       - name: Build react app
         run: yarn build
 
-      - name: Copy dist files
-        run: cp -r dist/* main/
+      - name: Copy dist files to temporary location
+        run: mkdir temp && cp -r dist/* temp/
 
       - name: Checkout main branch
         run: git checkout main
+
+      - name: Copy dist files to main branch
+        run: cp -r temp/* .
 
       - name: Add changes
         run: git add .
 
       - name: Commit changes
-        run: git commit -m "Update main from react dist"
+        run: |
+          git config --global user.email "your-email@example.com"
+          git config --global user.name "your-github-username"
+          git commit -m "Update main from react dist"
 
       - name: Push changes
-        run: git push
+        run: |
+          git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
