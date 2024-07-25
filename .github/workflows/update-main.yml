@@ -10,16 +10,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.14.0
+          cache: "yarn"
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Checkout react branch
         run: git checkout react
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Build react app
+        run: yarn build
+
       - name: Copy dist files
         run: cp -r dist/* main/
+
       - name: Checkout main branch
         run: git checkout main
+
       - name: Add changes
         run: git add .
+
       - name: Commit changes
         run: git commit -m "Update main from react dist"
+
       - name: Push changes
         run: git push
