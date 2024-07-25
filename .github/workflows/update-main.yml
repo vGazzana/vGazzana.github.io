@@ -1,0 +1,25 @@
+name: Update main branch from react dist
+
+on:
+  push:
+    branches:
+      - react
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checkout react branch
+        run: git checkout react
+      - name: Copy dist files
+        run: cp -r dist/* main/
+      - name: Checkout main branch
+        run: git checkout main
+      - name: Add changes
+        run: git add .
+      - name: Commit changes
+        run: git commit -m "Update main from react dist"
+      - name: Push changes
+        run: git push
